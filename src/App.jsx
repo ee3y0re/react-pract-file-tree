@@ -4,7 +4,7 @@ import React, { useState } from "react"; // keep react in scope
 // component
 function App() {
   return (
-    <div>
+    <div style={{ margin: "15px" }}>
       {/* javascript function with capitalized name is a component, basic unit of react
       <p>woot woot</p>
       <h1>it's so cold</h1>
@@ -37,6 +37,8 @@ function App() {
 const Folder = (props) => {
   const [ isOpen, setIsOpen ] = useState(false);
   const { name, children } = props;
+  const foldStat = isOpen ? "open" : ""
+  const direction = isOpen? "down" : "right"
 
   const handleClick = () => {
     setIsOpen(!isOpen);
@@ -45,7 +47,11 @@ const Folder = (props) => {
     <div>
       {/* curly braces prevent eval as text and eval as js instead */}
       {/* need to pass function uninvoked or else will pass in the return val */}
-      <span onClick={handleClick}>{name}</span>
+      <span onClick={handleClick}>
+        <i className={`teal folder ${foldStat} icon`}></i>
+        {/* <i className={`caret ${direction} icon`}></i> */}
+      </span>
+      {name}
       <div style={ {marginLeft: "17px"} }>
         {isOpen? children : null}
       </div>
@@ -54,9 +60,19 @@ const Folder = (props) => {
   )
 }
 
-const File = (props) => {
+const File = ({ name }) => {
+  const ext = name.split(".")[1];
+  const fileIcons = {
+    doc: "blue file alternate",
+    txt: "yellow sticky note",
+    jpeg: "pink file image",
+    xls: "green table"
+  }
   return (
-    <span>{props.name}</span>
+    <span>
+      <i className={`${fileIcons[ext]} icon`}></i>
+      {name}
+    </span>
   )
 }
 
