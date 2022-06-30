@@ -1,6 +1,5 @@
-import React from 'react';
+import React from 'react'; // need to stay in scope to write html with js
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
