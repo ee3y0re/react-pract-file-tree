@@ -1,4 +1,5 @@
-import React from "react"; // keep react in scope
+import React, { useState } from "react"; // keep react in scope
+// useState is hook that triggers redrawing component if inforation stored in it changes
 
 // component
 function App() {
@@ -16,8 +17,13 @@ function App() {
 
       {/* to show that folder is containing things */}
       <Folder name="Desktop">
-        <Folder name="Personal"></Folder>
+        <Folder name="Personal">
+          <File name="hopes_and_dreams.doc"/>
+          <br />
+          <File name="sources_of_fiber.xls"/>
+        </Folder>
         <File name="note-to-self.txt"/>
+        <br />
         <File name="one_waddle.doc"/>
       </Folder>
 
@@ -29,16 +35,19 @@ function App() {
 }
 // props is what is passed into component
 const Folder = (props) => {
-  console.log(props)
-  // hwo to inline style pt 1
-  const border = { border: "2px solid pink" }
+  const [ isOpen, setIsOpen ] = useState(false);
+  const { name, children } = props;
+
+  const handleClick = () => {
+    setIsOpen(!isOpen);
+  }
   return (
-    // how to inline style pt 2
-    <div style={border}>
+    <div>
       {/* curly braces prevent eval as text and eval as js instead */}
-      <h1>{props.name}</h1>
+      {/* need to pass function uninvoked or else will pass in the return val */}
+      <span onClick={handleClick}>{name}</span>
       <div style={ {marginLeft: "17px"} }>
-        {props.children}
+        {isOpen? children : null}
       </div>
       
     </div>
@@ -47,7 +56,7 @@ const Folder = (props) => {
 
 const File = (props) => {
   return (
-    <h2>{props.name}</h2>
+    <span>{props.name}</span>
   )
 }
 
